@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 export default function Header() {
     return (
-        <header className="fixed top-0 z-10 flex w-full items-center justify-between bg-white font-bold border-b border-gray-200 px-10 py-4">
+        <header className="sticky top-0 z-10 flex w-full items-center justify-between bg-white font-bold border-b border-gray-200 px-10 py-4">
             <div className='flex justify-center items-center'>
                 {/* <Image
                     src="/logo.png"
@@ -23,13 +23,13 @@ export default function Header() {
             <div className='flex justify-center items-center space-x-4'>
                 <Link
                     href="/"
-                    className="rounded-full p-2 px-4 text-xl transition duration-300 hover:text-[#444444]"
+                    className="rounded-lg p-2 px-4 text-xl transition duration-300 hover:text-[#444444]"
                 >
                     Home
                 </Link>
                 <Link
                     href="/donate"
-                    className="rounded-xl text-white bg-[#ff3130] p-2 px-8 text-xl transition duration-300 hover:scale-105"
+                    className="rounded-lg text-white bg-[#ff3131] p-2 px-8 text-xl transition duration-300 hover:scale-105"
                 >
                     Donate
                 </Link>
