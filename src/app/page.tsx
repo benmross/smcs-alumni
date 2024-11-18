@@ -3,7 +3,7 @@ import Image from "next/image";
 export default function Home() {
   return (
     <div className="flex-col w-screen h-screen items-center justify-center">
-        <p className="text-5xl">smcs alumni collective yay!</p>
+        <HeroSection />
         <div className="flex justify-between">
             <div className="w-1/2">
                 <p className="text-5xl text-[#ff3130] uppercase">Connecting</p>
@@ -15,5 +15,8 @@ export default function Home() {
             </div>
         </div>
     </div>
+    // <div className="flex w-screen h-screen items-center justify-center">
+    //   <p className="text-4xl">smcs alumni collective yay!</p>
+    // </div>
   );
 }
