@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function HeroSection({ type }) {
+export default function HeroSection({ type }: { type: "donate" | "home" }) {
     return (
       <div>
         {type === "donate" ? (
