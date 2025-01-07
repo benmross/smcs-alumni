@@ -12,6 +12,16 @@ export default function HeroSection() {
                     Donate
                 </Link>
             </div>
-        </div>
-    );
+        );
+    }
+    if (type === "donate") {
+        return (
+            <div>
+                <div className="flex flex-col space-y-6 items-center px-44 py-24 bg-[#232323] text-white">
+                    <p className="text-7xl font-bold text-center">Donate</p>
+                    <p className="text-2xl text-center">Thank you to all of our donors for supporting the students in SMCS at Poolesville High School!</p>
+                </div>
+            </div>
+        );
+    }
 };
