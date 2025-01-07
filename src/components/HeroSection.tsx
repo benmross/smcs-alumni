@@ -8,8 +8,7 @@ export default function HeroSection() {
                 <p className="text-2xl text-center">Supporting the students of the Science, Mathematics, and Computer Science (SMCS) program at Poolesville High School.</p>
                 <Link
                     href="/donate"
-                    className="rounded-lg text-white font-bold bg-[#ff3131] p-2 px-8 text-2xl transition duration-300 hover:scale-105"
-                >
+                    className="rounded-lg text-white font-bold bg-[#ff3131] p-2 px-8 text-2xl transition duration-300 hover:scale-105">
                     Donate
                 </Link>
             </div>

@@ -1,23 +1,32 @@
 import HeroSection from "@/components/HeroSection";
-import Image from "next/image";
+import Content from "@/components/Content";
+import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="flex-col w-screen h-screen items-center justify-center">
-        <HeroSection />
-        <div className="flex justify-between">
-            <div className="w-1/2">
-                <p className="text-5xl text-[#ff3130] uppercase">Connecting</p>
-                <p className="text-4xl">the community of SMCS alumni together for networking.</p>
+    <div>
+        <div>
+            <HeroSection />
+            <div className="flex justify-between px-20">
+                <div className="w-1/2 px-20">
+                    <p className="text-6xl text-[#ff3130] font-bold pt-24 uppercase flex justify-center items-center">Connecting</p>
+                    <p className="text-4xl text-center">the community of SMCS alumni together for networking.</p>
+                </div>
+                <div className="w-1/2 px-20">
+                    <p className="text-6xl text-[#ff3130] font-bold pt-24 uppercase flex justify-center items-center">Fundraising</p>
+                    <p className="text-4xl text-center">to support ongoing activities for the benefit of current SMCS students.</p>
+                </div>
             </div>
-            <div className="w-1/2">
-                <p className="text-5xl text-[#ff3130] uppercase">Fundraising</p>
-                <p className="text-4xl">to support ongoing activities for the benefit of current SMCS students.</p>
+            <Content/>
+            <div className="flex flex-col items-center pb-10">
+                <Link
+                    href="/donate"
+                    className="rounded-lg text-white font-bold bg-[#ff3131] p-2 px-8 text-2xl transition duration-300 hover:scale-105">
+                    Donate
+                </Link>
             </div>
         </div>
+
     </div>
-    // <div className="flex w-screen h-screen items-center justify-center">
-    //   <p className="text-4xl">smcs alumni collective yay!</p>
-    // </div>
   );
 }
