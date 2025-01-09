@@ -10,8 +10,7 @@ export default function Donate() {
             <div className="flex flex-col space-y-6 items-center px-44 py-24 bg-black text-white">
                 <p className="text-7xl text-white font-bold pt-5">Ways to Donate</p>
                 <div className="flex flex-col xl:flex-row space-y-6 xl:space-y-0 xl:space-x-6">
-                    <Link className="flex flex-col items-center px-10 py-10 transition duration-300 hover:scale-110"
-                        href="https://www.google.com/maps/place/8605+Santa+Monica+Blvd,+West+Hollywood,+CA+90069/@34.0880523,-118.3821239,17z/data=!3m1!4b1!4m6!3m5!1s0x80c2bebb02602b33:0x60072fd68413ee3c!8m2!3d34.0880523!4d-118.379549!16s%2Fg%2F11c2fk1tkn?entry=ttu&g_ep=EgoyMDI1MDEwMS4wIKXMDSoASAFQAw%3D%3D"
+                    <div className="flex flex-col items-center px-10 py-10"
                     >
                         <div className="rounded-full bg-[#ff3131] p-2 px-8 flex w-28 h-28 items-center justify-center">
                             <Image
@@ -22,8 +21,10 @@ export default function Donate() {
                             />
                         </div>
                         <p className="text-4xl font-bold text-center pt-2">Wire money</p>
-                    </Link>
-                    <Link className="flex flex-col items-center px-10 py-10 transition duration-300 hover:scale-110"
+                        <p className="text-2xl text-center pt-2">Routing Number: 121145307</p>
+                        <p className="text-2xl text-center pt-2">Account Number: 670227804024806</p>
+                    </div>
+                    <Link className="flex flex-col items-center px-10 py-10"
                         href="https://hcb.hackclub.com/donations/start/smcs-alumni-collective"
                     >
                         <div className="rounded-full bg-[#ff3131] p-2 px-8 flex w-28 h-28 items-center justify-center">
@@ -35,9 +36,9 @@ export default function Donate() {
                             />
                         </div>
                         <p className="text-4xl font-bold text-center pt-2">Donate Online</p>
+                        <Link href="https://hcb.hackclub.com/donations/start/smcs-alumni-collective" className="text-2xl font-bold px-4 py-2 bg-[#ff3130] text-white rounded-lg transition duration-300 hover:scale-105">Link</Link>
                     </Link>
-                    <Link className="flex flex-col items-center px-10 py-10 transition duration-300 hover:scale-110"
-                        href="mailto:chris@breadchris.com"
+                    <div className="flex flex-col items-center px-10 py-10"
                     >
                         <div className="rounded-full bg-[#ff3131] p-2 px-8 flex w-28 h-28 items-center justify-center">
                             <Image
@@ -48,7 +49,9 @@ export default function Donate() {
                             />
                         </div>
                         <p className="text-4xl font-bold text-center pt-2">Mail</p>
-                    </Link>
+                        <p className="text-2xl text-center pt-2">Checks payable to: Hack Club ATTN: SMCS Alumni Collective</p>
+                        <p className="text-2xl text-center pt-2">Mail check to: 8605 Santa Monica Blvd, Suite 86294 West Hollywood, CA 90069</p>
+                    </div>
                 </div>
             </div>
             <Finances />
