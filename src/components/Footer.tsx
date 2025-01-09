@@ -45,20 +45,12 @@ export default function Footer() {
                 </ul>
             </div>
             <div className="flex flex-col space-y-4 items-center text-center md:items-start md:text-left">
-                <p className="text-xl">Join Our Mailing List</p>
-                <form className="flex flex-col space-y-2 w-full">
-                    <input
-                        type="email"
-                        placeholder="Email address"
-                        className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#ff3130]"
-                    />
-                    <button
-                        type="submit"
-                        className="px-4 py-2 bg-[#ff3130] text-white rounded-lg transition duration-300 hover:scale-105"
-                    >
-                        Join
-                    </button>
-                </form>
+                <Link
+                    href={"https://forms.gle/DnHmue9kMT14guzV9"}
+                    className="px-4 py-2 bg-[#ff3130] text-white rounded-lg transition duration-300 hover:scale-105"
+                >
+                    Join Our Mailing List!
+                </Link>
             </div>
         </footer>
     );
