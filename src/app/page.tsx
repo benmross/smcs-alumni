@@ -7,12 +7,12 @@ export default function Home() {
     <div>
         <div>
             <HeroSection type="home" />
-            <div className="flex justify-between px-20">
-                <div className="w-1/2 px-20">
+            <div className="container mx-auto flex flex-wrap">
+                <div className="h-full lg:w-1/2 px-20">
                     <p className="text-6xl text-[#ff3130] font-bold pt-24 uppercase flex justify-center items-center">Connecting</p>
                     <p className="text-4xl text-center">the community of SMCS alumni together for networking.</p>
                 </div>
-                <div className="w-1/2 px-20">
+                <div className="h-full lg:w-1/2 px-20">
                     <p className="text-6xl text-[#ff3130] font-bold pt-24 uppercase flex justify-center items-center">Fundraising</p>
                     <p className="text-4xl text-center">to support ongoing activities for the benefit of current SMCS students.</p>
                 </div>
