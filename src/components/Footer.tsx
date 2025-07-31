@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { FaPhoneAlt, FaRegEnvelope, FaInstagram } from 'react-icons/fa';
+import { FaInstagram } from 'react-icons/fa';
 
 const LINKS = [
     ["Home", '/'],
@@ -20,14 +20,8 @@ export default function Footer() {
                         Connect with us!
                     </p>
                     <div className="flex space-x-4 mt-2">
-                        <Link href="" className="text-white text-2xl transition duration-300 hover:scale-110">
-                            <FaRegEnvelope />
-                        </Link>
-                        <Link href="" className="text-white text-2xl transition duration-300 hover:scale-110">
+                        <Link href="https://www.instagram.com/smcs.phs/" target="_blank" rel="noopener noreferrer" className="text-white text-2xl transition duration-300 hover:scale-110">
                             <FaInstagram />
-                        </Link>
-                        <Link href="" className="text-white text-2xl transition duration-300 hover:scale-110">
-                            <FaPhoneAlt />
                         </Link>
                     </div>
                 </div>
