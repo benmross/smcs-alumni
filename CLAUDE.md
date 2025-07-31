@@ -44,6 +44,7 @@ Key utilities in `src/components/firebase-util.ts`:
 
 - **Layout Pattern**: Root layout includes Header and Footer components
 - **Page Structure**: Uses HeroSection component with configurable types
+- **Content Display**: Content component dynamically fetches and displays MongoDB data
 - **Styling**: Consistent use of Tailwind classes with custom red theme color
 - **Responsive**: Mobile-responsive design with Tailwind breakpoints
 
@@ -61,6 +62,11 @@ Key utilities in `src/components/firebase-util.ts`:
 - `/api/admin/events` - Events CRUD
 - `/api/admin/alumni` - Featured alumni CRUD
 - `/api/admin/upload` - Image upload handler
+
+### Public API Routes
+- `/api/announcements` - Fetch 3 most recent announcements for home page display
+- `/api/events` - Fetch 3 upcoming events for home page display
+- `/api/alumni` - Fetch 3 featured alumni profiles for home page display
 
 ## Important Notes
 
