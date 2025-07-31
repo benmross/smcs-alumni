@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { Event } from '@/lib/models';
 
 interface EventsManagerProps {
@@ -20,8 +21,10 @@ export default function EventsManager({ onStatsUpdate }: EventsManagerProps) {
     imageUrl: ''
   });
   const [uploading, setUploading] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     loadEvents();
   }, []);
 
@@ -165,7 +168,7 @@ export default function EventsManager({ onStatsUpdate }: EventsManagerProps) {
       </div>
 
       {/* Form Modal */}
-      {showForm && (
+      {showForm && mounted && createPortal(
         <div 
           className="fixed inset-0 bg-black/70 flex items-center justify-center p-4" 
           style={{ zIndex: 9999 }}
@@ -281,7 +284,8 @@ export default function EventsManager({ onStatsUpdate }: EventsManagerProps) {
               </div>
             </form>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
       {/* Events List */}
