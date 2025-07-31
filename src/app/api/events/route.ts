@@ -2,6 +2,10 @@ import { NextResponse } from 'next/server';
 import clientPromise from '@/lib/mongodb';
 import { Event } from '@/lib/models';
 
+// Disable caching for this route
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 // GET - List upcoming events for public display
 export async function GET() {
   try {
