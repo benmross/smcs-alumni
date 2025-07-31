@@ -1,11 +1,10 @@
 import uniqid from 'uniqid'
-import Image from 'next/image'
-import { storage, database } from '../config-firebase'
+import { storage, database } from '../../config-firebase'
 import { arrayUnion, collection, doc, getDoc, getDocs, setDoc, updateDoc } from 'firebase/firestore'
 import { ref, getDownloadURL } from 'firebase/storage'
 
 export async function getImage(id: string, type: string) {
-    const imageRef = ref(storage, "/" + type, + "/" + id)
+    const imageRef = ref(storage, "/" + type + "/" + id)
     try {
         const url = await getDownloadURL(imageRef)
         return url
@@ -23,7 +22,7 @@ export async function getImage(id: string, type: string) {
 export async function getAllAnnouncements() {
     const announcementsRef = collection(database, 'announcements')
     const announcementSnap = await getDocs(announcementsRef)
-    var data = []
+    const data: any[] = []
     announcementSnap.forEach((announcement) => {
         data.push({
             ID: announcement.id,
@@ -40,7 +39,7 @@ export async function getAllAnnouncements() {
 export async function getAllAlumni() {
     const alumniRef = collection(database, 'alumni')
     const alumniSnap = await getDocs(alumniRef)
-    var data = []
+    const data: any[] = []
     alumniSnap.forEach((alumni) => {
         data.push({
             ID: alumni.id,
