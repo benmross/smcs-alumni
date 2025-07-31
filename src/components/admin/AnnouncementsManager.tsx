@@ -24,6 +24,29 @@ export default function AnnouncementsManager({ onStatsUpdate }: AnnouncementsMan
     loadAnnouncements();
   }, []);
 
+  useEffect(() => {
+    if (showForm) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [showForm]);
+
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && showForm) {
+        resetForm();
+      }
+    };
+    
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [showForm]);
+
   const loadAnnouncements = async () => {
     try {
       const response = await fetch('/api/admin/announcements');
@@ -141,8 +164,12 @@ export default function AnnouncementsManager({ onStatsUpdate }: AnnouncementsMan
 
       {/* Form Modal */}
       {showForm && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-gray-800 rounded-2xl p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+        <div 
+          className="fixed inset-0 bg-black/70 flex items-center justify-center p-4" 
+          style={{ zIndex: 9999 }}
+          onClick={(e) => e.target === e.currentTarget && resetForm()}
+        >
+          <div className="bg-gray-800 rounded-2xl p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl border border-gray-600" style={{ zIndex: 10000 }}>
             <div className="flex justify-between items-center mb-4">
               <h4 className="text-xl font-bold text-white">
                 {editingId ? 'Edit Announcement' : 'Add New Announcement'}
