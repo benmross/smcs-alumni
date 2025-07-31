@@ -68,6 +68,19 @@ Key utilities in `src/components/firebase-util.ts`:
 - `/api/events` - Fetch 3 upcoming events for home page display
 - `/api/alumni` - Fetch 3 featured alumni profiles for home page display
 
+**Cache Management**: All public API routes use `dynamic = 'force-dynamic'` and `revalidate = 0` to prevent caching and ensure real-time data updates.
+
+## Content Loading & Caching
+
+The home page uses aggressive anti-caching mechanisms to ensure data freshness:
+
+- **API Routes**: Configured with `force-dynamic` rendering and zero revalidation
+- **Next.js Config**: Global API route headers disable all caching layers
+- **Client-Side**: Uses `cache: 'no-store'` with timestamp and random parameters
+- **Auto-Refresh**: Content refreshes every 30 seconds and when tab becomes visible
+- **Error Handling**: Comprehensive retry logic with exponential backoff
+- **Manual Refresh**: Users can manually refresh content via UI button
+
 ## Important Notes
 
 - Firebase config contains public API keys (normal for client-side Firebase)
@@ -76,3 +89,4 @@ Key utilities in `src/components/firebase-util.ts`:
 - Donation functionality integrates with Hack Club Bank (hcb.hackclub.com)
 - Uses Next.js Image component for optimized image loading
 - MongoDB connection string and admin credentials in .env.local
+- **Data Freshness**: Content updates are immediately visible due to comprehensive cache-busting
