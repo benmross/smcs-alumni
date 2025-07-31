@@ -22,18 +22,23 @@ export default function Content() {
 
             // Add cache-busting headers and timestamp to prevent caching issues
             const timestamp = Date.now();
+            const randomParam = Math.random().toString(36).substring(7);
             const fetchOptions = {
+                method: 'GET',
                 headers: {
-                    'Cache-Control': 'no-cache, no-store, must-revalidate',
+                    'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=0',
                     'Pragma': 'no-cache',
-                    'Expires': '0'
-                }
+                    'Expires': '0',
+                    'If-None-Match': '*',
+                    'If-Modified-Since': 'Thu, 01 Jan 1970 00:00:00 GMT'
+                },
+                cache: 'no-store' as RequestCache
             };
 
             const [announcementsRes, eventsRes, alumniRes] = await Promise.all([
-                fetch(`/api/announcements?t=${timestamp}`, fetchOptions),
-                fetch(`/api/events?t=${timestamp}`, fetchOptions), 
-                fetch(`/api/alumni?t=${timestamp}`, fetchOptions)
+                fetch(`/api/announcements?t=${timestamp}&r=${randomParam}`, fetchOptions),
+                fetch(`/api/events?t=${timestamp}&r=${randomParam}`, fetchOptions), 
+                fetch(`/api/alumni?t=${timestamp}&r=${randomParam}`, fetchOptions)
             ]);
 
             // Check if all responses are ok
@@ -83,7 +88,28 @@ export default function Content() {
 
     useEffect(() => {
         fetchData();
-    }, [fetchData]);
+        
+        // Set up automatic refresh every 30 seconds to catch new content
+        const interval = setInterval(() => {
+            if (!loading) {
+                fetchData(true); // Silent refresh
+            }
+        }, 30000);
+        
+        // Refresh when user returns to the tab
+        const handleVisibilityChange = () => {
+            if (!document.hidden && !loading) {
+                fetchData(true); // Silent refresh when tab becomes visible
+            }
+        };
+        
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+        
+        return () => {
+            clearInterval(interval);
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
+        };
+    }, [fetchData, loading]);
 
     const formatDate = (dateString: string) => {
         return new Date(dateString).toLocaleDateString('en-US', {
