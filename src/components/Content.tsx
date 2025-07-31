@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { Announcement, Event, FeaturedAlumni } from '@/lib/models';
 
 export default function Content() {
@@ -10,34 +10,80 @@ export default function Content() {
     const [events, setEvents] = useState<Event[]>([]);
     const [alumni, setAlumni] = useState<FeaturedAlumni[]>([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+    const [retryCount, setRetryCount] = useState(0);
+
+    const fetchData = useCallback(async (isRetry = false) => {
+        try {
+            setError(null);
+            if (!isRetry) {
+                setLoading(true);
+            }
+
+            // Add cache-busting headers and timestamp to prevent caching issues
+            const timestamp = Date.now();
+            const fetchOptions = {
+                headers: {
+                    'Cache-Control': 'no-cache, no-store, must-revalidate',
+                    'Pragma': 'no-cache',
+                    'Expires': '0'
+                }
+            };
+
+            const [announcementsRes, eventsRes, alumniRes] = await Promise.all([
+                fetch(`/api/announcements?t=${timestamp}`, fetchOptions),
+                fetch(`/api/events?t=${timestamp}`, fetchOptions), 
+                fetch(`/api/alumni?t=${timestamp}`, fetchOptions)
+            ]);
+
+            // Check if all responses are ok
+            if (!announcementsRes.ok) {
+                throw new Error(`Failed to fetch announcements: ${announcementsRes.status}`);
+            }
+            if (!eventsRes.ok) {
+                throw new Error(`Failed to fetch events: ${eventsRes.status}`);
+            }
+            if (!alumniRes.ok) {
+                throw new Error(`Failed to fetch alumni: ${alumniRes.status}`);
+            }
+
+            const [announcementsData, eventsData, alumniData] = await Promise.all([
+                announcementsRes.json(),
+                eventsRes.json(),
+                alumniRes.json()
+            ]);
+
+            // Validate data structure
+            setAnnouncements(Array.isArray(announcementsData) ? announcementsData : []);
+            setEvents(Array.isArray(eventsData) ? eventsData : []);
+            setAlumni(Array.isArray(alumniData) ? alumniData : []);
+            
+            setRetryCount(0); // Reset retry count on success
+        } catch (error) {
+            console.error('Failed to fetch data:', error);
+            setError(error instanceof Error ? error.message : 'Failed to load content');
+            
+            // Auto-retry up to 3 times with exponential backoff
+            if (retryCount < 3) {
+                const delay = Math.pow(2, retryCount) * 1000; // 1s, 2s, 4s
+                setTimeout(() => {
+                    setRetryCount(prev => prev + 1);
+                    fetchData(true);
+                }, delay);
+            }
+        } finally {
+            setLoading(false);
+        }
+    }, [retryCount]);
+
+    const handleRetry = () => {
+        setRetryCount(0);
+        fetchData();
+    };
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const [announcementsRes, eventsRes, alumniRes] = await Promise.all([
-                    fetch('/api/announcements'),
-                    fetch('/api/events'),
-                    fetch('/api/alumni')
-                ]);
-
-                const [announcementsData, eventsData, alumniData] = await Promise.all([
-                    announcementsRes.json(),
-                    eventsRes.json(),
-                    alumniRes.json()
-                ]);
-
-                setAnnouncements(announcementsData);
-                setEvents(eventsData);
-                setAlumni(alumniData);
-            } catch (error) {
-                console.error('Failed to fetch data:', error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
         fetchData();
-    }, []);
+    }, [fetchData]);
 
     const formatDate = (dateString: string) => {
         return new Date(dateString).toLocaleDateString('en-US', {
@@ -51,7 +97,34 @@ export default function Content() {
         return (
             <div className="py-16 px-4 sm:px-6 lg:px-8 text-center">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#ff3131] mx-auto"></div>
-                <p className="mt-4 text-gray-600">Loading content...</p>
+                <p className="mt-4 text-gray-600">
+                    {retryCount > 0 ? `Loading content... (Attempt ${retryCount + 1}/4)` : 'Loading content...'}
+                </p>
+            </div>
+        );
+    }
+
+    if (error && retryCount >= 3) {
+        return (
+            <div className="py-16 px-4 sm:px-6 lg:px-8 text-center">
+                <div className="bg-red-50 border border-red-200 rounded-lg p-6 max-w-md mx-auto">
+                    <div className="text-red-600 mb-4">
+                        <svg className="w-12 h-12 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.5 0L4.268 18.5c-.77.833.192 2.5 1.732 2.5z" />
+                        </svg>
+                        <h3 className="font-semibold text-lg">Failed to Load Content</h3>
+                    </div>
+                    <p className="text-gray-700 mb-4">{error}</p>
+                    <button
+                        onClick={handleRetry}
+                        className="inline-flex items-center px-4 py-2 bg-[#ff3131] text-white rounded-lg hover:bg-[#e02828] transition-colors duration-200"
+                    >
+                        <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m-15.357-2A8.003 8.003 0 0019.417 15M15 15H9" />
+                        </svg>
+                        Try Again
+                    </button>
+                </div>
             </div>
         );
     }
@@ -59,6 +132,20 @@ export default function Content() {
     return (
         <div className="bg-white">
             <div className="container mx-auto py-16 px-4 sm:px-6 lg:px-8">
+                {/* Refresh Button */}
+                <div className="text-center mb-8">
+                    <button
+                        onClick={handleRetry}
+                        className="inline-flex items-center px-4 py-2 text-sm font-medium text-[#ff3131] bg-white border border-[#ff3131] rounded-lg hover:bg-[#ff3131] hover:text-white transition-colors duration-200"
+                        disabled={loading}
+                    >
+                        <svg className={`w-4 h-4 mr-2 ${loading ? 'animate-spin' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m-15.357-2A8.003 8.003 0 0019.417 15M15 15H9" />
+                        </svg>
+                        {loading ? 'Refreshing...' : 'Refresh Content'}
+                    </button>
+                </div>
+
                 {/* Announcements Section */}
                 <section className="mb-16">
                     <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#ff3131] mb-8 text-center lg:text-left">

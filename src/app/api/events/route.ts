@@ -17,7 +17,14 @@ export async function GET() {
       .limit(3) // Limit to 3 upcoming events for home page
       .toArray();
 
-    return NextResponse.json(events);
+    const response = NextResponse.json(events);
+    
+    // Add cache-busting headers to prevent stale data
+    response.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+    response.headers.set('Pragma', 'no-cache');
+    response.headers.set('Expires', '0');
+    
+    return response;
   } catch (error) {
     console.error('Failed to fetch events:', error);
     return NextResponse.json(

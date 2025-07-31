@@ -15,7 +15,14 @@ export async function GET() {
       .limit(3) // Limit to 3 most recent announcements for home page
       .toArray();
 
-    return NextResponse.json(announcements);
+    const response = NextResponse.json(announcements);
+    
+    // Add cache-busting headers to prevent stale data
+    response.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+    response.headers.set('Pragma', 'no-cache');
+    response.headers.set('Expires', '0');
+    
+    return response;
   } catch (error) {
     console.error('Failed to fetch announcements:', error);
     return NextResponse.json(
