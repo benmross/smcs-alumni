@@ -47,9 +47,26 @@ Key utilities in `src/components/firebase-util.ts`:
 - **Styling**: Consistent use of Tailwind classes with custom red theme color
 - **Responsive**: Mobile-responsive design with Tailwind breakpoints
 
+## Admin Dashboard
+
+- **Access**: `/admin` (not accessible through navigation)
+- **Authentication**: Username/password login (credentials in .env.local)
+- **Features**: Full CRUD operations for announcements, events, and featured alumni
+- **Image Upload**: Supports image uploads for all content types
+- **Database**: MongoDB for persistent storage
+
+### Admin API Routes
+- `/api/auth/login` - Admin authentication
+- `/api/admin/announcements` - Announcements CRUD
+- `/api/admin/events` - Events CRUD
+- `/api/admin/alumni` - Featured alumni CRUD
+- `/api/admin/upload` - Image upload handler
+
 ## Important Notes
 
 - Firebase config contains public API keys (normal for client-side Firebase)
 - Images stored in `/public/` directory (wire.png, mail.png, link.png)
+- Admin uploaded images stored in `/public/uploads/`
 - Donation functionality integrates with Hack Club Bank (hcb.hackclub.com)
 - Uses Next.js Image component for optimized image loading
+- MongoDB connection string and admin credentials in .env.local
