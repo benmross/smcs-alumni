@@ -138,7 +138,7 @@ export default function AdminDashboard() {
         </div>
 
         {/* Tab Navigation */}
-        <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700/30 rounded-2xl overflow-hidden">
+        <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700/30 rounded-2xl">
           <div className="border-b border-gray-700/30">
             <nav className="flex">
               {[

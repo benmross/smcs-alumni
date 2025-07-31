@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { FeaturedAlumni } from '@/lib/models';
 
 interface AlumniManagerProps {
@@ -21,8 +22,10 @@ export default function AlumniManager({ onStatsUpdate }: AlumniManagerProps) {
     imageUrl: ''
   });
   const [uploading, setUploading] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     loadAlumni();
   }, []);
 
@@ -167,7 +170,7 @@ export default function AlumniManager({ onStatsUpdate }: AlumniManagerProps) {
       </div>
 
       {/* Form Modal */}
-      {showForm && (
+      {showForm && mounted && createPortal(
         <div 
           className="fixed inset-0 bg-black/70 flex items-center justify-center p-4" 
           style={{ zIndex: 9999 }}
@@ -299,7 +302,8 @@ export default function AlumniManager({ onStatsUpdate }: AlumniManagerProps) {
               </div>
             </form>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
       {/* Alumni List */}
