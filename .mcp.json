@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "MongoDB": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "mongodb-mcp-server",
+        "--connectionString",
+        "mongodb+srv://benmross08:f7mvpfyHIZt9c9fp@cluster0.khvrbuw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+      ]
+    }
+  }
+}
