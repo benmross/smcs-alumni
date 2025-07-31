@@ -35,14 +35,16 @@ export default function HeroSection({ type }: { type: "donate" | "home" | "ledge
             <div className="relative z-10 max-w-5xl mx-auto text-center space-y-6">
               <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold leading-tight">SMCS <span className="text-[#ff3131]">Alumni</span> Collective</h1>
               <p className="text-lg sm:text-xl lg:text-2xl leading-relaxed max-w-3xl mx-auto">Supporting the students of the Science, Mathematics, and Computer Science (SMCS) program at Poolesville High School.</p>
-              <Link href="/donate">
-                <p className="inline-flex items-center rounded-lg text-white font-bold bg-[#ff3131] px-6 py-3 text-lg lg:text-2xl transition duration-300 hover:scale-105 hover:bg-[#e02828]">
-                  Donate Now
-                  <svg className="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </p>
-              </Link>
+              <div className="pt-8">
+                <Link href="/donate">
+                  <p className="inline-flex items-center rounded-lg text-white font-bold bg-[#ff3131] px-6 py-3 text-lg lg:text-2xl transition duration-300 hover:scale-105 hover:bg-[#e02828]">
+                    Donate Now
+                    <svg className="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </p>
+                </Link>
+              </div>
             </div>
           </div>
         )}
