@@ -1,4 +1,3 @@
-import Finances from "@/components/Finances";
 import Link from "next/link";
 import Image from "next/image";
 import HeroSection from "@/components/HeroSection";
@@ -179,9 +178,6 @@ export default function Donate() {
                     </div>
                 </div>
             </section>
-
-            {/* Finances Component */}
-            <Finances />
 
             {/* Embedded Donation Form */}
             <section className="relative bg-gray-50">

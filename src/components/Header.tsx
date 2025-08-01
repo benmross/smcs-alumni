@@ -38,6 +38,15 @@ export default function Header() {
                             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#ff3131] transition-all duration-300 group-hover:w-full"></span>
                         </Link>
                         <Link
+                            href="https://hcb.hackclub.com/reimbursement/start/smcs-alumni-collective"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="relative px-3 lg:px-4 py-2 text-sm lg:text-base font-medium text-gray-700 hover:text-[#ff3131] transition-all duration-300 group"
+                        >
+                            Request Reimbursement
+                            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#ff3131] transition-all duration-300 group-hover:w-full"></span>
+                        </Link>
+                        <Link
                             href="/donate"
                             className="ml-4 inline-flex items-center px-4 lg:px-6 py-2 text-sm lg:text-base font-semibold text-white bg-gradient-to-r from-[#ff3131] to-[#e02828] rounded-lg shadow-lg hover:shadow-xl hover:scale-105 transform transition-all duration-300 hover:from-[#e02828] hover:to-[#ff3131]"
                         >
@@ -68,7 +77,7 @@ export default function Header() {
             </div>
 
             {/* Mobile Navigation Menu */}
-            <div className={`md:hidden transition-all duration-300 ease-in-out ${isMenuOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0'} overflow-hidden`}>
+            <div className={`md:hidden transition-all duration-300 ease-in-out ${isMenuOpen ? 'max-h-80 opacity-100' : 'max-h-0 opacity-0'} overflow-hidden`}>
                 <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-gray-200">
                     <Link
                         href="/"
@@ -83,6 +92,15 @@ export default function Header() {
                         onClick={() => setIsMenuOpen(false)}
                     >
                         Public Ledger
+                    </Link>
+                    <Link
+                        href="https://hcb.hackclub.com/reimbursement/start/smcs-alumni-collective"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-[#ff3131] hover:bg-red-50 rounded-md transition-colors duration-300"
+                        onClick={() => setIsMenuOpen(false)}
+                    >
+                        Request Reimbursement
                     </Link>
                     <Link
                         href="/donate"
